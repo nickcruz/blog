@@ -48,4 +48,4 @@ Task lists and tables come through with GFM support:
 
 And local public images can be embedded with root-relative paths:
 
-![Starter illustration](/window.svg)
+![Starter illustration](/nick.jpg)
