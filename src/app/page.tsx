@@ -25,28 +25,26 @@ export default function Home() {
 
         <section className="space-y-4">
           {posts.map((post) => (
-            <Card
-              key={post.slug}
-              className="transition-colors duration-150 hover:bg-accent/60"
-            >
-              <CardHeader className="gap-3">
-                <p className="text-sm text-muted-foreground">
-                  {formatPostDate(post.date)}
-                </p>
-                <div className="space-y-2">
-                  <CardTitle className="text-2xl">
-                    <Link
-                      className="transition-opacity hover:opacity-70"
-                      href={`/posts/${post.slug}`}
-                    >
+            <Card key={post.slug} className="transition-colors duration-150 hover:bg-accent/60">
+              <Link
+                aria-label={`Read ${post.title}`}
+                className="block h-full rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                href={`/posts/${post.slug}`}
+              >
+                <CardHeader className="gap-3">
+                  <p className="text-sm text-muted-foreground">
+                    {formatPostDate(post.date)}
+                  </p>
+                  <div className="space-y-2">
+                    <CardTitle className="text-2xl">
                       {post.title}
-                    </Link>
-                  </CardTitle>
-                  <CardDescription className="text-base leading-7 text-muted-foreground">
-                    {post.description}
-                  </CardDescription>
-                </div>
-              </CardHeader>
+                    </CardTitle>
+                    <CardDescription className="text-base leading-7 text-muted-foreground">
+                      {post.description}
+                    </CardDescription>
+                  </div>
+                </CardHeader>
+              </Link>
             </Card>
           ))}
         </section>
