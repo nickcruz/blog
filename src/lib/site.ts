@@ -1,6 +1,6 @@
 export const siteConfig = {
-  title: "Personal Blog",
-  description: "A simple collection of posts written in markdown.",
+  title: "Nick Reyes",
+  description: "Writing on engineering, systems, and building AI products.",
   intro:
-    "A very small static blog built from markdown files in the repo. Each post is rendered at build time with just the essentials up front.",
+    "Co-Founder & CTO of Leda AI, building AI products and writing about engineering, systems, and the craft of shipping software.",
 } as const;
