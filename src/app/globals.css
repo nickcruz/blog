@@ -1,26 +1,197 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #fafaf8;
+  --foreground: #18181b;
+  --card: #ffffff;
+  --card-foreground: #18181b;
+  --border: #e7e5e4;
+  --muted: #f5f5f4;
+  --muted-foreground: #57534e;
+  --accent: #f3f4f6;
+  --accent-foreground: #18181b;
+  --ring: #18181b;
+  --radius: 1rem;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-border: var(--border);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-ring: var(--ring);
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: var(--radius);
+  --radius-xl: 1.5rem;
+  --font-sans: var(--font-ibm-plex-sans);
+  --font-mono: var(--font-ibm-plex-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  border-color: var(--border);
+}
+
+html {
+  background: var(--background);
 }
 
 body {
+  min-height: 100vh;
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-ibm-plex-sans), sans-serif;
+}
+
+::selection {
+  background: var(--foreground);
+  color: #ffffff;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+.markdown {
+  color: var(--foreground);
+  font-size: 1.05rem;
+  line-height: 1.85;
+}
+
+.markdown > * + * {
+  margin-top: 1.25rem;
+}
+
+.markdown h1,
+.markdown h2,
+.markdown h3,
+.markdown h4 {
+  font-family: var(--font-ibm-plex-sans), sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  color: var(--foreground);
+}
+
+.markdown h1 {
+  margin-top: 0;
+  font-size: clamp(2.25rem, 5vw, 3.5rem);
+}
+
+.markdown h2 {
+  margin-top: 2.75rem;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+}
+
+.markdown h3 {
+  margin-top: 2.25rem;
+  font-size: 1.3rem;
+}
+
+.markdown p,
+.markdown li,
+.markdown blockquote {
+  color: #292524;
+}
+
+.markdown a {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+
+.markdown strong {
+  font-weight: 600;
+}
+
+.markdown ul,
+.markdown ol {
+  padding-left: 1.5rem;
+}
+
+.markdown ul {
+  list-style: disc;
+}
+
+.markdown ol {
+  list-style: decimal;
+}
+
+.markdown li + li {
+  margin-top: 0.4rem;
+}
+
+.markdown blockquote {
+  border-left: 3px solid var(--border);
+  padding-left: 1rem;
+}
+
+.markdown hr {
+  border: 0;
+  border-top: 1px solid var(--border);
+  margin: 2.5rem 0;
+}
+
+.markdown pre,
+.markdown code,
+.markdown kbd,
+.markdown samp {
+  font-family: var(--font-ibm-plex-mono), monospace;
+}
+
+.markdown :not(pre) > code {
+  background: var(--accent);
+  border-radius: 0.375rem;
+  padding: 0.15rem 0.35rem;
+  font-size: 0.92em;
+}
+
+.markdown pre {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  background: #ffffff;
+  padding: 1rem 1.125rem;
+  line-height: 1.6;
+}
+
+.markdown img {
+  margin: 2rem 0;
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  background: #ffffff;
+}
+
+.markdown table {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  border-collapse: collapse;
+}
+
+.markdown th,
+.markdown td {
+  border: 1px solid var(--border);
+  padding: 0.75rem 1rem;
+  text-align: left;
+}
+
+.markdown th {
+  background: var(--accent);
+  font-weight: 600;
+}
+
+.markdown input[type="checkbox"] {
+  margin-right: 0.6rem;
 }

@@ -1,36 +1,84 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Personal Blog
+
+A minimal Next.js blog that statically renders markdown posts committed in the repo.
+
+## Stack
+
+- Next.js App Router
+- Tailwind CSS v4
+- IBM Plex Sans for UI and headings
+- IBM Plex Mono for markdown code
+- shadcn-style `Card` component for the homepage list
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
-npm run dev
-# or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Content Model
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Posts live in `content/posts/*.md` and are rendered at build time.
 
-## Learn More
+Each post must include this frontmatter:
 
-To learn more about Next.js, take a look at the following resources:
+```md
+---
+title: "Post title"
+description: "Short summary shown on the homepage"
+date: "2026-03-18"
+slug: "post-title"
+---
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `title` is used on the homepage and post page
+- `description` is the preview text and metadata description
+- `date` controls ordering and display format
+- `slug` becomes the URL at `/posts/[slug]`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+The build will fail for missing metadata, invalid dates, or duplicate slugs.
 
-## Deploy on Vercel
+## Scripts
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+yarn dev
+yarn lint
+yarn build
+yarn post:import -- --input tmp/source.md --title "My Post" --description "Short summary" --date "2026-03-18" --slug "my-post"
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Importing a Post from Notion Markdown
+
+This repo includes a local Codex skill and a helper script for turning pasted Notion markdown into a post.
+
+- Skill: `.codex/skills/blog-post-import/SKILL.md`
+- Script: `scripts/import-blog-post.mjs`
+
+The importer will:
+
+- read markdown from `--input <file>` or stdin
+- infer title, description, and slug when possible
+- download remote markdown images into `public/posts/<slug>/`
+- rewrite markdown image URLs to local site URLs like `/posts/<slug>/image-01.jpg`
+- write the finished post to `content/posts/<slug>.md`
+
+Example using stdin:
+
+```bash
+cat tmp/source.md | yarn post:import -- --date "2026-03-18"
+```
+
+If metadata is still missing after inference, pass it with flags or run the script interactively with `--input`.
+
+## Project Structure
+
+```text
+content/posts/          Markdown source for blog posts
+public/posts/           Imported post images
+scripts/                Blog post import helper
+src/app/                App Router pages and layout
+src/components/         UI and markdown rendering
+src/lib/                Content loading and site config
+```
