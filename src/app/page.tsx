@@ -5,23 +5,43 @@ import {
   RiLinkedinBoxLine,
   RiTwitterXLine,
 } from "react-icons/ri";
-import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { formatPostDate, getAllPosts } from "@/lib/posts";
-import { siteConfig } from "@/lib/site";
+
+const homeContent = {
+  portraitAlt: "Portrait of Nick Reyes",
+  siteLabel: "About",
+  name: "Nick Reyes",
+  rolePrefix: "Co-Founder",
+  companyName: "Leda AI",
+  bio: "Writing about engineering, systems, all things tech.",
+  readPostLabel: "Read Post",
+  readPostAriaPrefix: "Read",
+  socialLabels: {
+    linkedin: "LinkedIn",
+    twitter: "Twitter",
+    instagram: "Instagram",
+  },
+} as const;
 
 const socialLinks = [
   {
-    label: "LinkedIn",
+    label: homeContent.socialLabels.linkedin,
     href: "https://www.linkedin.com/in/nicolasreyes26",
     Icon: RiLinkedinBoxLine,
   },
   {
-    label: "Twitter",
+    label: homeContent.socialLabels.twitter,
     href: "https://x.com/nickcruz26",
     Icon: RiTwitterXLine,
   },
   {
-    label: "Instagram",
+    label: homeContent.socialLabels.instagram,
     href: "https://www.instagram.com/nick.reyes26",
     Icon: RiInstagramLine,
   },
@@ -37,7 +57,7 @@ export default function Home() {
           <div className="space-y-8 border border-border bg-card p-6 sm:p-8">
             <div className="space-y-6">
               <Image
-                alt="Portrait of Nick Reyes"
+                alt={homeContent.portraitAlt}
                 className="h-28 w-28 border border-border object-cover sm:h-36 sm:w-36"
                 height={3000}
                 priority
@@ -48,27 +68,27 @@ export default function Home() {
               <div className="space-y-4">
                 <div className="space-y-2">
                   <p className="text-xs font-medium uppercase tracking-[0.32em] text-secondary">
-                    Personal Site
+                    {homeContent.siteLabel}
                   </p>
                   <h1 className="text-4xl font-semibold tracking-[-0.04em] text-foreground sm:text-5xl">
-                    Nick Reyes
+                    {homeContent.name}
                   </h1>
                 </div>
 
                 <p className="max-w-sm text-base leading-7 text-secondary">
-                  Co-Founder &amp; CTO of{" "}
+                  {homeContent.rolePrefix}{" "}
                   <a
                     className="font-semibold text-link underline decoration-current/60 underline-offset-4"
                     href="https://askleda.com"
                     rel="noreferrer noopener"
                     target="_blank"
                   >
-                    Leda AI
+                    {homeContent.companyName}
                   </a>
                 </p>
 
                 <p className="max-w-md text-base leading-7 text-foreground">
-                  {siteConfig.intro}
+                  {homeContent.bio}
                 </p>
               </div>
             </div>
@@ -91,20 +111,6 @@ export default function Home() {
         </aside>
 
         <section className="space-y-6 lg:col-span-2">
-          <header className="space-y-4 border-b border-border pb-6">
-            <p className="text-xs font-medium uppercase tracking-[0.32em] text-secondary">
-              Writing
-            </p>
-            <div className="space-y-3">
-              <h2 className="text-3xl font-semibold tracking-[-0.03em] text-foreground sm:text-4xl">
-                Notes on building AI products, teams, and software.
-              </h2>
-              <p className="max-w-3xl text-base leading-7 text-secondary sm:text-lg">
-                {siteConfig.description}
-              </p>
-            </div>
-          </header>
-
           <div className="space-y-4">
             {posts.map((post, index) => (
               <Card
@@ -112,7 +118,7 @@ export default function Home() {
                 className="transition-colors duration-150 hover:border-brand-accent hover:bg-accent"
               >
                 <Link
-                  aria-label={`Read ${post.title}`}
+                  aria-label={`${homeContent.readPostAriaPrefix} ${post.title}`}
                   className="block h-full text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-background"
                   href={`/posts/${post.slug}`}
                 >
@@ -136,7 +142,7 @@ export default function Home() {
                         {String(index + 1).padStart(2, "0")}
                       </p>
                       <p className="text-sm font-medium uppercase tracking-[0.2em] text-brand-accent">
-                        Read Post
+                        {homeContent.readPostLabel}
                       </p>
                     </div>
                   </CardHeader>
