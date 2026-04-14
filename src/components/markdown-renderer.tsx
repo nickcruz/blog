@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import type { Root } from "mdast";
+import posthog from "posthog-js";
 import rehypePrism from "rehype-prism-plus";
 import type { Components } from "react-markdown";
 import ReactMarkdown from "react-markdown";
@@ -64,6 +65,7 @@ export function MarkdownRenderer({ content }: MarkdownRendererProps) {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         setExpandedImage(null);
+        posthog.capture("image_overlay_closed", { method: "escape_key" });
       }
     };
 
@@ -84,6 +86,7 @@ export function MarkdownRenderer({ content }: MarkdownRendererProps) {
       return (
         <a
           href={href}
+          onClick={isExternal ? () => posthog.capture("external_link_clicked", { url: href }) : undefined}
           rel={isExternal ? "noreferrer noopener" : undefined}
           target={isExternal ? "_blank" : undefined}
           {...props}
@@ -99,7 +102,10 @@ export function MarkdownRenderer({ content }: MarkdownRendererProps) {
         <button
           aria-label={`Open image${alt ? `: ${alt}` : ""}`}
           className="markdown-image-trigger"
-          onClick={() => setExpandedImage({ alt: alt ?? "", src })}
+          onClick={() => {
+            setExpandedImage({ alt: alt ?? "", src });
+            posthog.capture("image_expanded", { image_src: src, image_alt: alt ?? "" });
+          }}
           type="button"
         >
           <img
@@ -132,13 +138,13 @@ export function MarkdownRenderer({ content }: MarkdownRendererProps) {
         <div
           aria-modal="true"
           className="image-overlay"
-          onClick={() => setExpandedImage(null)}
+          onClick={() => { setExpandedImage(null); posthog.capture("image_overlay_closed", { method: "backdrop_click" }); }}
           role="dialog"
         >
           <button
             aria-label="Close image"
             className="image-overlay__close"
-            onClick={() => setExpandedImage(null)}
+            onClick={() => { setExpandedImage(null); posthog.capture("image_overlay_closed", { method: "close_button" }); }}
             type="button"
           >
             Close
