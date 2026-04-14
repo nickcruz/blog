@@ -1,51 +1,34 @@
 ---
 title: Welcome to the blog
-description: A first post that shows the markdown format, supported metadata, and the clean presentation this site is built around.
+description: 👋
 date: "2026-03-18"
 slug: welcome-to-the-blog
 ---
 
-# Welcome to the blog
+Welcome to my blog! If you're into tech, AI, and like to nerd out about stuff, you might be in the right place.
 
-This site reads markdown files from the repo and turns them into static pages. The frontmatter at the top of each file is the full content contract for a post:
+If you're an engineer[-turned-vibe-coder] you are _definitely_ in the right place.
 
-```yaml
-title: Welcome to the blog
-description: A short summary used on the home page and in metadata.
-date: 2026-03-18
-slug: welcome-to-the-blog
-```
+## Why I'm blogging
 
-## What works well here
+I'm building a business with my wife and co-founder, [Mika Reyes](https://mikareyes.com/), and we're going to learn _a lot_ of things along the way.
 
-- Plain markdown files committed alongside the code
-- A clean homepage listing every post
-- Build-time validation for required metadata
-- A lightweight path for importing posts from Notion markdown later
+This is here to jot down my thoughts, celebrate wins, and learn about our losses. We're building in public and want a place to share things.
 
-## Markdown examples
+Here's the first micro-post:
 
-Inline code like `yarn build` uses IBM Plex Mono, and fenced blocks do too:
+## Website stack
 
+This is a `Next.js` app deployed on Vercel and almost entirely vibe-coded. Except for the blog posts.
+
+- Every blog post is a `.md` file.
+- Next.js server-side renders the markdown files with `react-markdown` when you go to `/posts/[slug]`.
+- I use `rehype` to add syntax highlighting to code blocks.
 ```ts
 export function hello(name: string) {
   return `Hello, ${name}`;
 }
 ```
+_Wow, so cool!_
 
-Task lists and tables come through with GFM support:
-
-- [x] Read local markdown files
-- [x] Render a static homepage
-- [ ] Write the next post
-
-| Field | Purpose |
-| --- | --- |
-| `title` | Displayed on the home page and post page |
-| `description` | Used for the preview text |
-| `date` | Controls ordering and display |
-| `slug` | Defines the URL |
-
-And local public images can be embedded with root-relative paths:
-
-![Starter illustration](/nick.jpg)
+That's it, that's the post.

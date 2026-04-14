@@ -7,7 +7,7 @@ A minimal Next.js blog that statically renders markdown posts committed in the r
 - Next.js App Router
 - Tailwind CSS v4
 - IBM Plex Sans for UI and headings
-- IBM Plex Mono for markdown code
+- Fira Code for markdown code
 - shadcn-style `Card` component for the homepage list
 
 ## Getting Started

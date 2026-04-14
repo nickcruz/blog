@@ -36,7 +36,7 @@
   --radius-lg: var(--radius);
   --radius-xl: 0;
   --font-sans: var(--font-ibm-plex-sans);
-  --font-mono: var(--font-ibm-plex-mono);
+  --font-mono: var(--font-fira-code);
 }
 
 *,
@@ -171,13 +171,14 @@ img {
 .markdown code,
 .markdown kbd,
 .markdown samp {
-  font-family: var(--font-ibm-plex-mono), monospace;
+  font-family: var(--font-fira-code), monospace;
+  line-height: 1.48;
 }
 
 .markdown :not(pre) > code {
   border: 1px solid var(--brand-accent);
   background: var(--accent);
-  padding: 0.15rem 0.35rem;
+  padding: 0.1rem 0.25rem;
   font-size: 0.92em;
 }
 
@@ -186,13 +187,202 @@ img {
   border: 1px solid var(--border);
   background: var(--muted);
   padding: 1rem 1.125rem;
-  line-height: 1.6;
+  line-height: 1.25;
+}
+
+.markdown pre code[class*="language-"],
+.markdown pre code.code-highlight {
+  display: block;
+  color: #1f2328;
+}
+
+.markdown .code-highlight {
+  float: left;
+  min-width: 100%;
+}
+
+.markdown .code-line {
+  display: block;
+  padding-inline: 1rem;
+  margin-inline: -1rem;
+  border-left: 4px solid transparent;
+}
+
+.markdown .code-line.inserted {
+  background: color-mix(in srgb, #0a7f46 16%, transparent);
+}
+
+.markdown .code-line.deleted {
+  background: color-mix(in srgb, #cf222e 16%, transparent);
+}
+
+.markdown .highlight-line {
+  background: color-mix(in srgb, var(--brand-accent) 14%, transparent);
+  border-left-color: var(--brand-accent);
+}
+
+.markdown .line-number::before {
+  display: inline-block;
+  width: 2rem;
+  margin-left: -0.25rem;
+  margin-right: 1rem;
+  color: #6e7781;
+  text-align: right;
+  content: attr(line);
+}
+
+.markdown .token.comment,
+.markdown .token.prolog,
+.markdown .token.cdata,
+.markdown .token.doctype {
+  color: #6e7781;
+}
+
+.markdown .token.keyword,
+.markdown .token.boolean,
+.markdown .token.constant,
+.markdown .token.atrule,
+.markdown .token.selector,
+.markdown .token.important {
+  color: #cf222e;
+}
+
+.markdown .token.number,
+.markdown .token.property,
+.markdown .token.symbol,
+.markdown .token.inserted,
+.markdown .token.attr-value,
+.markdown .token.variable {
+  color: #0550ae;
+}
+
+.markdown .token.string,
+.markdown .token.char,
+.markdown .token.regex,
+.markdown .token.entity {
+  color: #0a7f46;
+}
+
+.markdown .token.function,
+.markdown .token.class-name {
+  color: #8250df;
+}
+
+.markdown .token.tag,
+.markdown .token.attr-name,
+.markdown .token.namespace,
+.markdown .token.deleted {
+  color: #953800;
+}
+
+.markdown .token.builtin,
+.markdown .token.interpolation-punctuation {
+  color: #6639ba;
+}
+
+.markdown .token.operator,
+.markdown .token.punctuation {
+  color: #4b5563;
+}
+
+.markdown .token.url,
+.markdown .token.annotation,
+.markdown .token.decorator {
+  color: #1f6feb;
+}
+
+.markdown .token.italic {
+  font-style: italic;
+}
+
+.markdown .token.bold,
+.markdown .token.important {
+  font-weight: 700;
 }
 
 .markdown img {
   margin: 2rem 0;
   border: 1px solid var(--border);
   background: var(--muted);
+}
+
+.markdown-image-trigger {
+  display: block;
+  width: 100%;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  text-align: inherit;
+  cursor: zoom-in;
+}
+
+.markdown-image-trigger:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 6px;
+}
+
+.markdown-image-trigger img {
+  margin: 0;
+}
+
+.image-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: color-mix(in srgb, var(--foreground) 82%, transparent);
+  backdrop-filter: blur(4px);
+  margin: 0;
+}
+
+.image-overlay__close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  border: 1px solid var(--background);
+  background: color-mix(in srgb, var(--foreground) 55%, transparent);
+  color: var(--background);
+  padding: 0.55rem 0.85rem;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.image-overlay__viewport {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.image-overlay__content {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image-overlay__image {
+  margin: 0;
+  border: 1px solid color-mix(in srgb, var(--background) 35%, transparent);
+  background: var(--muted);
+  max-width: calc(100vw - 2rem);
+  max-height: calc(100vh - 2rem);
+  width: auto;
+  height: auto;
+}
+
+@media (max-width: 640px) {
+  .image-overlay__image {
+    max-width: calc(100vw - 1rem);
+    max-height: calc(100vh - 1rem);
+  }
 }
 
 .markdown table {

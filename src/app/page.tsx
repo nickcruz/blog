@@ -18,7 +18,7 @@ const homeContent = {
   siteLabel: "About",
   name: "Nick Reyes",
   rolePrefix: "Co-Founder",
-  companyName: "Leda AI",
+  companyName: "King's Cross Labs",
   bio: "Writing about engineering, systems, all things tech.",
   readPostLabel: "Read Post",
   readPostAriaPrefix: "Read",
@@ -79,7 +79,7 @@ export default function Home() {
                   {homeContent.rolePrefix}{" "}
                   <a
                     className="font-semibold text-link underline decoration-current/60 underline-offset-4"
-                    href="https://askleda.com"
+                    href="https://kingscrosslabs.com"
                     rel="noreferrer noopener"
                     target="_blank"
                   >
@@ -112,7 +112,7 @@ export default function Home() {
 
         <section className="space-y-6 lg:col-span-2">
           <div className="space-y-4">
-            {posts.map((post, index) => (
+            {posts.map((post, index, array) => (
               <Card
                 key={post.slug}
                 className="transition-colors duration-150 hover:border-brand-accent hover:bg-accent"
@@ -139,7 +139,7 @@ export default function Home() {
 
                     <div className="space-y-3 border-t border-border pt-4 sm:min-w-28 sm:border-t-0 sm:border-l sm:pl-6 sm:pt-0">
                       <p className="text-xs font-medium uppercase tracking-[0.28em] text-secondary">
-                        {String(index + 1).padStart(2, "0")}
+                        {String(array.length - index).padStart(2, "0")}
                       </p>
                       <p className="text-sm font-medium uppercase tracking-[0.2em] text-brand-accent">
                         {homeContent.readPostLabel}
