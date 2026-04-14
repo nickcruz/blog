@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
 import { cache } from "react";
+import { siteConfig } from "@/lib/site";
 
 export type PostFrontmatter = {
   title: string;
@@ -129,6 +130,53 @@ export function getAllPostSlugs() {
 
 export function getPostBySlug(slug: string) {
   return loadPosts().find((post) => post.slug === slug);
+}
+
+function toAbsolutePostAssetUrl(slug: string, assetPath: string) {
+  try {
+    return new URL(assetPath, `${siteConfig.siteUrl}/posts/${slug}`).toString();
+  } catch {
+    return assetPath;
+  }
+}
+
+function rewriteMarkdownImagesToLinks(content: string, slug: string) {
+  return content.replace(
+    /!\[([^\]]*)\]\(([^)\s]+)(?:\s+"[^"]*")?\)/g,
+    (_match, alt: string, source: string) => {
+      const label = alt.trim() || "Image";
+      const absoluteSource = toAbsolutePostAssetUrl(slug, source.trim());
+
+      return `[${label}](${absoluteSource})`;
+    },
+  );
+}
+
+export function serializePostToMarkdown(post: Post) {
+  const frontmatter = [
+    "---",
+    `title: ${JSON.stringify(post.title)}`,
+    `description: ${JSON.stringify(post.description)}`,
+    `date: ${JSON.stringify(post.date)}`,
+    `slug: ${JSON.stringify(post.slug)}`,
+    `author: ${JSON.stringify(siteConfig.authorName)}`,
+    "---",
+  ].join("\n");
+
+  const body = rewriteMarkdownImagesToLinks(post.content, post.slug);
+  const header = [
+    `# ${post.title}`,
+    "",
+    post.description,
+    "",
+    `Author: [${siteConfig.authorName}](${siteConfig.siteUrl})`,
+    "",
+    post.date,
+    "",
+    "---",
+  ].join("\n");
+
+  return `${frontmatter}\n\n${header}\n\n${body.trim()}\n`;
 }
 
 export function formatPostDate(date: string) {

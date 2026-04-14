@@ -2,8 +2,14 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
+import { PostMarkdownActions } from "@/components/post-markdown-actions";
 import { buildPostMetadata } from "@/lib/metadata";
-import { formatPostDate, getAllPostSlugs, getPostBySlug } from "@/lib/posts";
+import {
+  formatPostDate,
+  getAllPostSlugs,
+  getPostBySlug,
+  serializePostToMarkdown,
+} from "@/lib/posts";
 import { siteConfig } from "@/lib/site";
 
 type PostPageProps = {
@@ -42,16 +48,25 @@ export default async function PostPage({ params }: PostPageProps) {
     notFound();
   }
 
+  const markdownHref = `/posts/${post.slug}.md`;
+  const markdown = serializePostToMarkdown(post);
+
   return (
     <main className="min-h-screen bg-background">
       <div className="mx-auto flex w-full max-w-5xl flex-col gap-10 px-6 py-12 sm:px-8 lg:py-16">
         <div className="space-y-4">
-          <Link
-            className="inline-flex text-sm font-medium uppercase tracking-[0.2em] text-link transition-opacity hover:opacity-70"
-            href="/"
-          >
-            Back to all posts
-          </Link>
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+            <Link
+              className="inline-flex text-sm font-medium uppercase tracking-[0.2em] text-link transition-opacity hover:opacity-70"
+              href="/"
+            >
+              Back to all posts
+            </Link>
+
+            <div className="hidden sm:block">
+              <PostMarkdownActions markdown={markdown} markdownHref={markdownHref} />
+            </div>
+          </div>
 
           <header className="space-y-4 border-b border-border pb-8">
             <p className="text-sm text-secondary">
