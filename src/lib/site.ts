@@ -13,7 +13,7 @@ export const siteConfig = {
     rolePrefix: "Co-Founder",
     companyName: "King's Cross Labs",
     companyUrl: "https://kingscrosslabs.com",
-    bio: "Co-Founder at King's Cross Labs. Writing about engineering, systems, and all things tech.",
+    bio: "Writing about engineering, systems, and all things tech.",
     readPostLabel: "Read Post",
     readPostAriaPrefix: "Read",
   },
