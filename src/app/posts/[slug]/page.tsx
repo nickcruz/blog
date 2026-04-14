@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
+import { buildPostMetadata } from "@/lib/metadata";
 import { formatPostDate, getAllPostSlugs, getPostBySlug } from "@/lib/posts";
 import { siteConfig } from "@/lib/site";
 
@@ -30,10 +31,7 @@ export async function generateMetadata({
     };
   }
 
-  return {
-    title: post.title,
-    description: post.description,
-  };
+  return buildPostMetadata(post);
 }
 
 export default async function PostPage({ params }: PostPageProps) {

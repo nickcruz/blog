@@ -16,6 +16,7 @@ const firaCode = Fira_Code({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteConfig.siteUrl),
   title: {
     default: siteConfig.title,
     template: `%s | ${siteConfig.title}`,

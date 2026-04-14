@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
+import type { Metadata } from "next";
 import {
+  RiGithubLine,
   RiInstagramLine,
   RiLinkedinBoxLine,
   RiTwitterXLine,
@@ -11,41 +13,36 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { buildRootMetadata } from "@/lib/metadata";
 import { formatPostDate, getAllPosts } from "@/lib/posts";
+import { siteConfig } from "@/lib/site";
 
-const homeContent = {
-  portraitAlt: "Portrait of Nick Reyes",
-  siteLabel: "About",
-  name: "Nick Reyes",
-  rolePrefix: "Co-Founder",
-  companyName: "King's Cross Labs",
-  bio: "Writing about engineering, systems, all things tech.",
-  readPostLabel: "Read Post",
-  readPostAriaPrefix: "Read",
-  socialLabels: {
-    linkedin: "LinkedIn",
-    twitter: "Twitter",
-    instagram: "Instagram",
-  },
-} as const;
+const { home: homeContent } = siteConfig;
 
 const socialLinks = [
   {
-    label: homeContent.socialLabels.linkedin,
-    href: "https://www.linkedin.com/in/nicolasreyes26",
+    label: siteConfig.socialLabels.github,
+    href: siteConfig.socialLinks.github,
+    Icon: RiGithubLine,
+  },
+  {
+    label: siteConfig.socialLabels.linkedin,
+    href: siteConfig.socialLinks.linkedin,
     Icon: RiLinkedinBoxLine,
   },
   {
-    label: homeContent.socialLabels.twitter,
-    href: "https://x.com/nickcruz26",
+    label: siteConfig.socialLabels.twitter,
+    href: siteConfig.socialLinks.twitter,
     Icon: RiTwitterXLine,
   },
   {
-    label: homeContent.socialLabels.instagram,
-    href: "https://www.instagram.com/nick.reyes26",
+    label: siteConfig.socialLabels.instagram,
+    href: siteConfig.socialLinks.instagram,
     Icon: RiInstagramLine,
   },
 ] as const;
+
+export const metadata: Metadata = buildRootMetadata();
 
 export default function Home() {
   const posts = getAllPosts();
@@ -79,7 +76,7 @@ export default function Home() {
                   {homeContent.rolePrefix}{" "}
                   <a
                     className="font-semibold text-link underline decoration-current/60 underline-offset-4"
-                    href="https://kingscrosslabs.com"
+                    href={homeContent.companyUrl}
                     rel="noreferrer noopener"
                     target="_blank"
                   >
