@@ -15,7 +15,7 @@ export default async function OpenGraphImage() {
   return new ImageResponse(
     <div
       style={{
-        background: "#eae0d5",
+        background: "#f6efe7",
         color: "#0a0908",
         display: "flex",
         flexDirection: "column",
