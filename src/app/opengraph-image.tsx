@@ -1,4 +1,5 @@
 import { ImageResponse } from "next/og";
+import { getOgFonts } from "@/lib/og-font";
 import { siteConfig } from "@/lib/site";
 
 export const alt = `${siteConfig.siteName} Open Graph image`;
@@ -8,116 +9,108 @@ export const size = {
 };
 export const contentType = "image/png";
 
-export default function OpenGraphImage() {
+export default async function OpenGraphImage() {
+  const fonts = await getOgFonts();
+
   return new ImageResponse(
-    (
+    <div
+      style={{
+        background: "#eae0d5",
+        color: "#0a0908",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        width: "100%",
+        height: "100%",
+        fontFamily: '"IBM Plex Sans", sans-serif',
+        border: "1px solid #22333b",
+      }}
+    >
       <div
         style={{
-          background:
-            "linear-gradient(135deg, #f4efe8 0%, #efe4d3 52%, #e5d5bc 100%)",
-          color: "#211a13",
           display: "flex",
+          flex: 1,
           flexDirection: "column",
           justifyContent: "space-between",
-          width: "100%",
-          height: "100%",
           padding: "64px",
-          fontFamily: "sans-serif",
         }}
       >
         <div
           style={{
             display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            fontSize: 28,
-            letterSpacing: "0.22em",
+            fontSize: 26,
             textTransform: "uppercase",
+            letterSpacing: "0.18em",
+            color: "#22333b",
           }}
         >
-          <span>{siteConfig.siteName}</span>
-          <span>{siteConfig.home.siteLabel}</span>
+          {siteConfig.siteUrl.replace("https://", "")}
         </div>
-
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "20px",
-            maxWidth: "920px",
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              fontSize: 78,
-              fontWeight: 700,
-              letterSpacing: "-0.05em",
-              lineHeight: 1,
-            }}
-          >
-            {siteConfig.home.name}
-          </div>
-          <div
-            style={{
-              display: "flex",
-              fontSize: 34,
-              lineHeight: 1.35,
-              color: "#5b4738",
-            }}
-          >
-            {siteConfig.description}
-          </div>
-        </div>
-
         <div
           style={{
             display: "flex",
             justifyContent: "space-between",
             alignItems: "flex-end",
+            gap: "32px",
           }}
         >
           <div
             style={{
               display: "flex",
               flexDirection: "column",
-              gap: "12px",
+              maxWidth: "760px",
             }}
           >
             <div
               style={{
                 display: "flex",
-                fontSize: 24,
-                color: "#7b604d",
-                textTransform: "uppercase",
-                letterSpacing: "0.16em",
+                fontSize: 96,
+                fontWeight: 700,
+                letterSpacing: "-0.05em",
+                lineHeight: 1,
+                marginLeft: -4,
               }}
             >
-              {siteConfig.home.rolePrefix}
+              {siteConfig.home.name}
             </div>
             <div
               style={{
                 display: "flex",
-                fontSize: 40,
-                fontWeight: 600,
+                marginTop: "20px",
+                fontSize: 38,
+                fontWeight: 500,
+                lineHeight: 1.35,
+                color: "#22333b",
               }}
             >
-              {siteConfig.home.companyName}
+              {siteConfig.home.rolePrefix}, {siteConfig.home.companyName}
             </div>
           </div>
-
-          <div
+          <img
+            alt={siteConfig.home.portraitAlt}
+            height="160"
+            src={`${siteConfig.siteUrl}/nick.jpg`}
             style={{
               display: "flex",
-              fontSize: 24,
-              color: "#7b604d",
+              width: "160px",
+              height: "160px",
+              objectFit: "cover",
+              border: "1px solid #22333b",
             }}
-          >
-            {siteConfig.siteUrl.replace("https://", "")}
-          </div>
+          />
         </div>
       </div>
-    ),
-    size,
+      <div
+        style={{
+          width: "100%",
+          height: "18px",
+          background: "#f25f5c",
+        }}
+      />
+    </div>,
+    {
+      ...size,
+      fonts,
+    },
   );
 }
