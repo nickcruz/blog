@@ -5,6 +5,14 @@ date: "2026-04-14"
 slug: building-for-agents
 ---
 
+:::takeaways
+Takeaways
+
+1. Agents are a different kind of user, so optimize for structure output, more specific tool args, and machine-friendly workflows rather than human ergonomics.
+2. CLI tooling does a lot of "thinking" an LLM would otherwise spend tokens doing, saving both users and LLMs tokens (time and money).
+3. Super-specific tool usage (using a CLI with lots of args) is _okay_ when humans never touch the interface directly as the agent absorbs the complexity for the user.
+:::
+
 Last week, my co-founder and I built a CLI tool. Not for humans, for AI agents.
 
 Specifically, we built an [agent skill](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview), so she could analyze her [Instagram content](https://www.instagram.com/its.mikareyes).

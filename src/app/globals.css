@@ -161,6 +161,33 @@ img {
   padding-block: 0.25rem;
 }
 
+.markdown .markdown-takeaways {
+  margin: 0 0 2rem;
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--accent) 70%, var(--background) 30%);
+  padding: 1rem 1.25rem;
+}
+
+.markdown .markdown-takeaways > * + * {
+  margin-top: 0.75rem;
+}
+
+.markdown .markdown-takeaways > :first-child {
+  margin-top: 0;
+}
+
+.markdown .markdown-takeaways > :last-child {
+  margin-bottom: 0;
+}
+
+.markdown .markdown-takeaways p:first-child {
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--secondary);
+}
+
 .markdown hr {
   border: 0;
   border-top: 1px solid var(--border);

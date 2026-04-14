@@ -1,16 +1,51 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import type { Root } from "mdast";
 import rehypePrism from "rehype-prism-plus";
 import type { Components } from "react-markdown";
 import ReactMarkdown from "react-markdown";
+import remarkDirective from "remark-directive";
 import remarkGfm from "remark-gfm";
+import { visit } from "unist-util-visit";
 
 /* eslint-disable @next/next/no-img-element */
 
 type MarkdownRendererProps = {
   content: string;
 };
+
+function remarkTakeawaysDirective() {
+  return (tree: Root) => {
+    visit(tree, (node) => {
+      if (
+        typeof node !== "object" ||
+        node === null ||
+        !("type" in node) ||
+        !("name" in node) ||
+        node.type !== "containerDirective" ||
+        node.name !== "takeaways"
+      ) {
+        return;
+      }
+
+      const data =
+        "data" in node && typeof node.data === "object" && node.data !== null
+          ? node.data
+          : {};
+
+      Object.assign(node, {
+        data: {
+          ...data,
+          hName: "aside",
+          hProperties: {
+            className: ["markdown-takeaways"],
+          },
+        },
+      });
+    });
+  };
+}
 
 export function MarkdownRenderer({ content }: MarkdownRendererProps) {
   const [expandedImage, setExpandedImage] = useState<{
@@ -84,7 +119,11 @@ export function MarkdownRenderer({ content }: MarkdownRendererProps) {
       <ReactMarkdown
         components={components}
         rehypePlugins={[[rehypePrism, { ignoreMissing: true }]]}
-        remarkPlugins={[remarkGfm]}
+        remarkPlugins={[
+          remarkGfm,
+          remarkDirective,
+          remarkTakeawaysDirective,
+        ]}
       >
         {content}
       </ReactMarkdown>
